@@ -57,6 +57,15 @@ const houseSchema = new mongoose.Schema({
 	},
 });
 
+// Document middleware
+
+//runs only before .save, .create
+houseSchema.pre('save', function (next) {
+	//create a name to be used for better looking url
+	this.slug = slugify(this.name, { lower: true });
+	next();
+});
+
 const House = mongoose.model('House', houseSchema);
 
 module.exports = House;
