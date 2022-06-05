@@ -13,7 +13,7 @@ exports.createOne = (Model) =>
 	});
 
 // Get all documents
-exports.getAll = (Model) => {
+exports.getAll = (Model) =>
 	catchAsync(async (req, res, next) => {
 		const doc = await Model.find();
 
@@ -23,7 +23,6 @@ exports.getAll = (Model) => {
 			data: doc,
 		});
 	});
-};
 
 // Get document
 exports.getOne = (Model) =>
