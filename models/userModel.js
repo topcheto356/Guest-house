@@ -93,7 +93,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 	// passwordChangedAt may not be even created
 	if (this.passwordChangedAt) {
 		//returned in msec and needed in sec
-		const changedTimestamp = parentInt(
+		const changedTimestamp = parseInt(
 			this.passwordChangedAt.getTime() / 1000,
 			10
 		);
