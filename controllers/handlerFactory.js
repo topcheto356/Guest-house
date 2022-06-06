@@ -1,5 +1,5 @@
 const AppError = require('../../Natours/utils/appError');
-const catchAsync = require('../util/catchAsync');
+const catchAsync = require('../utils/catchAsync');
 
 // Create one document
 exports.createOne = (Model) =>
