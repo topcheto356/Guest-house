@@ -70,6 +70,17 @@ userSchema.pre('save', async function (next) {
 	next();
 });
 
+//update passwordChangedAt
+userSchema.pre('save', function (next) {
+	//if password field not changed
+	if (!this.isModified('password') || this.isNew) return next();
+
+	//sometimes JWT is created before the passwordChangedAt is created
+	//saved 1 sec in the past
+	this.passwordChangedAt = Date.now() - 1000;
+	next();
+});
+
 //instance method
 userSchema.methods.correctPassoword = async function (
 	candidatePassword,
