@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
 		validator: [validator.isEmail, 'Enter valid email'],
 	},
 	password: {
-		type: string,
+		type: String,
 		require: [true, 'User must have a password'],
 		minlength: [8, 'A password must be minimum 8 characters'],
 		select: false,
