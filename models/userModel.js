@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema({
 			message: 'Passwords are NOT the same',
 		},
 	},
+	photo: String,
+	role: {
+		type: String,
+		enum: ['user', 'owner', 'admin'],
+		default: 'user',
+	},
 	active: {
 		//Used when deleting
 		type: Boolean,
