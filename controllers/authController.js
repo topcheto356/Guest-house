@@ -90,3 +90,12 @@ exports.protect = catchAsync(async (req, res, next) => {
 	req.user = freshUser;
 	next();
 });
+
+exports.restrictTo = (...roles) => {
+	return (req, res, next) => {
+		if (!roles.includes(req.user.role)) {
+			return next('You don not have pemission to perform this action', 403);
+		}
+		next();
+	};
+};
