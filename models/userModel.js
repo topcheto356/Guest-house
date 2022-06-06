@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
 		default: true,
 		select: false,
 	},
+	passwordChangedAt: Date,
 });
 
 //hashing the password
@@ -75,5 +76,21 @@ userSchema.methods.correctPassoword = async function (
 };
 
 const User = mongoose.model('User', userSchema);
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+	// passwordChangedAt may not be even created
+	if (this.passwordChangedAt) {
+		//returned in msec and needed in sec
+		const changedTimestamp = parentInt(
+			this.passwordChangedAt.getTime() / 1000,
+			10
+		);
+
+		return JWTTimestamp < changedTimestamp;
+	}
+
+	//False === Not changed
+	return false;
+};
 
 module.exports = User;
