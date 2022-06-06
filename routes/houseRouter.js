@@ -17,7 +17,15 @@ router
 router
 	.route('/:id')
 	.get(houseController.getHouse)
-	.delete(authController.protect, houseController.deleteHouse)
-	.patch(authController.protect, houseController.updateHouse);
+	.delete(
+		authController.restrictTo('admin', 'owner'),
+		authController.protect,
+		houseController.deleteHouse
+	)
+	.patch(
+		authController.restrictTo('admin', 'owner'),
+		authController.protect,
+		houseController.updateHouse
+	);
 
 module.exports = router;
