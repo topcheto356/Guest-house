@@ -4,6 +4,7 @@ const morgan = require('morgan');
 
 const globalErrorHandler = require('./controllers/errorController');
 const houseRouter = require('./routes/houseRouter');
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.json({ limit: '10kb' }));
 ////////////////////////////////////////////////////////
 //Routes
 app.use('/houses', houseRouter);
+app.use('/users', userRouter);
 
 app.use(globalErrorHandler);
 module.exports = app;
