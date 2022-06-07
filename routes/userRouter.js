@@ -10,14 +10,44 @@ router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
+//middleware
+//it will protect all the routes after this point
+router.use(authController.protect);
+
 router.patch(
 	'/updateMyPassword',
-	authController.protect,
+
 	authController.updatePassword
 );
 
-router.patch('/updateMe', authController.protect, userController.updateMe);
+router.patch('/updateMe', userController.updateMe);
 
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+router.delete('/deleteMe', userController.deleteMe);
+
+router
+	.route('/')
+	.get(
+		//authController.restricTo('admin')
+		userController.getAllUsers
+	)
+	.post(
+		//authController.restricTo('admin')
+		userController.createUser
+	);
+
+router
+	.route('/:id')
+	.get(
+		//authController.restricTo('admin')
+		userController.getUser
+	)
+	.patch(
+		//authController.restricTo('admin')
+		userController.updateUser
+	)
+	.delete(
+		//authController.restricTo('admin')
+		userController.deleteUser
+	);
 
 module.exports = router;
