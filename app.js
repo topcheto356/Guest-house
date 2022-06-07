@@ -27,11 +27,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 //rate timiter
-const limiter = {
+const limiter = rateLimit({
 	max: 100,
 	windowMs: 60 * 60 * 1000, //1h
 	message: 'Too many requests from this IP, please try again in an hour',
-};
+});
 app.use('/api', limiter);
 
 //body parcer
@@ -58,6 +58,11 @@ app.use(
 //Routes
 app.use('/api/houses', houseRouter);
 app.use('/api/users', userRouter);
+
+app.all('*', (req, res, next) => {
+	//if you pass argument in the next(), express will asume this is an error
+	next(new AppError(`Cant find ${req.originalUrl} on this server!`, 404));
+});
 
 app.use(globalErrorHandler);
 module.exports = app;
