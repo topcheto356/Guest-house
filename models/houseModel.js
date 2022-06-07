@@ -78,6 +78,13 @@ houseSchema.pre('save', function (next) {
 	next();
 });
 
+// virtual populate
+houseSchema.virtual('reviews', {
+	ref: 'Review',
+	foreignField: 'house',
+	localField: '_id',
+});
+
 //Query middleware
 
 //to populate owner field

@@ -32,9 +32,16 @@ exports.getAll = (Model) =>
 	});
 
 // Get document
-exports.getOne = (Model) =>
+exports.getOne = (Model, populate) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.findById(req.params.id);
+		//do the query
+		let query = Model.findById(req.params.id);
+
+		//check if there are populate options
+		//if they are add populate
+		if (populate) query = query.populate(populate);
+
+		const doc = await query;
 
 		if (!doc) {
 			return next(new AppError('No document found with that Id', 404));

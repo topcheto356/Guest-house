@@ -5,7 +5,7 @@ const factory = require('./handlerFactory');
 exports.createHouse = factory.createOne(House);
 
 // Get guest house
-exports.getHouse = factory.getOne(House);
+exports.getHouse = factory.getOne(House, { path: 'reviews' });
 
 // Get all  guest house
 exports.getAllHouses = factory.getAll(House);
