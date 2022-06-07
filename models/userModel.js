@@ -58,6 +58,8 @@ const userSchema = new mongoose.Schema({
 
 //hashing the password
 userSchema.pre('save', async function (next) {
+	//this point to the current doc
+
 	//if password field not changed
 	if (!this.isModified('password')) return next();
 
@@ -72,12 +74,21 @@ userSchema.pre('save', async function (next) {
 
 //update passwordChangedAt
 userSchema.pre('save', function (next) {
+	//this point to the current doc
+
 	//if password field not changed
 	if (!this.isModified('password') || this.isNew) return next();
 
 	//sometimes JWT is created before the passwordChangedAt is created
 	//saved 1 sec in the past
 	this.passwordChangedAt = Date.now() - 1000;
+	next();
+});
+
+//not show deleted users (active:false)
+userSchema.pre(/^find/, function (next) {
+	//this point to the current query
+	this.find({ active: { $ne: false } });
 	next();
 });
 
