@@ -64,6 +64,28 @@ class APIFeatures {
 
 		return this;
 	}
+	paginate() {
+		// Pagination
+
+		//127.0.0.1:3000/api/v1/tours?page=2&limit=10
+		//page=2&limit=10
+
+		const page = this.queryStr.page * 1 || 1;
+		const limit = this.queryStr.limit * 1 || 100;
+		const skip = (page - 1) * limit;
+		//1-10 for page 1 and 11-20 for page 2 ......
+
+		this.query = this.query.skip(skip).limit(limit);
+
+		//if the selected page is doesnt exist
+		// if (req.query.page) {
+		//   const numberTours = await Tour.countDocuments();
+
+		//   if (skip >= numberTours) throw new Error('This page deast not exist');
+		// }
+
+		return this;
+	}
 }
 
 module.exports = APIFeatures;
