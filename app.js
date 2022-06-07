@@ -8,9 +8,10 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 
 const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 const houseRouter = require('./routes/houseRouter');
 const userRouter = require('./routes/userRouter');
-const AppError = require('../Natours/utils/appError');
+const reviewRouter = require('./routes/reviewRouter');
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use(
 //Routes
 app.use('/api/houses', houseRouter);
 app.use('/api/users', userRouter);
+app.use('/api/reviews', reviewRouter);
 
 app.all('*', (req, res, next) => {
 	//if you pass argument in the next(), express will asume this is an error
