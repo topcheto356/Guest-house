@@ -63,6 +63,7 @@ const houseSchema = new mongoose.Schema(
 		],
 	},
 	{
+		//to use virtual properties
 		toJSON: { virtuals: true },
 		toObject: { virtuals: true },
 	}
@@ -75,6 +76,16 @@ houseSchema.pre('save', function (next) {
 	//create a name to be used for better looking url
 	this.slug = slugify(this.name, { lower: true });
 	next();
+});
+
+//Query middleware
+
+//to populate owner field
+houseSchema.pre(/^find/, function (next) {
+	this.populate({
+		path: 'owners',
+		select: '-__v-passwordChangedAt',
+	});
 });
 
 const House = mongoose.model('House', houseSchema);
