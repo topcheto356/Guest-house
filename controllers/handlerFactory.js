@@ -15,7 +15,13 @@ exports.createOne = (Model) =>
 // Get all documents
 exports.getAll = (Model) =>
 	catchAsync(async (req, res, next) => {
-		const doc = await Model.find();
+		//EXECUTE QUERRY
+		const features = new APIFeatures(Model.find(), req.query)
+			.filter()
+			.sort()
+			.limitFields()
+			.paginate();
+		const doc = await features.query;
 
 		res.status(200).json({
 			status: 'success',
