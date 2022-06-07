@@ -44,6 +44,26 @@ class APIFeatures {
 
 		return this;
 	}
+
+	limitFields() {
+		// 3) Field limiting
+
+		//showing only needed fields
+
+		//127.0.0.1:3000/api/v1/tours?fields=name,duration,price
+		//127.0.0.1:3000/api/v1/tours?fields=-name,-duration,price
+
+		if (this.queryStr.fields) {
+			const fields = this.queryStr.fields.split(',').join(' ');
+			this.query = this.query.select(fields);
+		} else {
+			//Defaulth
+			//excluding __v field (made by mongoose)
+			this.query = this.query.select('-__v');
+		}
+
+		return this;
+	}
 }
 
 module.exports = APIFeatures;
