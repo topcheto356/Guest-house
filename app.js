@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const globalErrorHandler = require('./controllers/errorController');
 const houseRouter = require('./routes/houseRouter');
 const userRouter = require('./routes/userRouter');
+const AppError = require('../Natours/utils/appError');
 
 const app = express();
 
