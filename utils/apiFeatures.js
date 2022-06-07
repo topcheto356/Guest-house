@@ -27,6 +27,23 @@ class APIFeatures {
 
 		return this;
 	}
+
+	sort() {
+		//2) Sorting
+
+		//127.0.0.1:3000/api/v1/tours?sort=price,ratingsAverage
+		//127.0.0.1:3000/api/v1/tours?sort=-price
+		//sort('price ratingsAverage')
+		if (this.queryStr.sort) {
+			const sortBy = this.queryStr.sort.split(',').join(' ');
+			this.query = this.query.sort(sortBy);
+		} else {
+			//Defaulth
+			this.query = this.query.sort('-createdaAt');
+		}
+
+		return this;
+	}
 }
 
 module.exports = APIFeatures;
