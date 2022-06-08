@@ -14,40 +14,25 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 //it will protect all the routes after this point
 router.use(authController.protect);
 
-router.patch(
-	'/updateMyPassword',
-
-	authController.updatePassword
-);
+router.patch('/updateMyPassword', authController.updatePassword);
 
 router.patch('/updateMe', userController.updateMe);
 
+router.get('/me', userController.getMe, userController.getUser);
+
 router.delete('/deleteMe', userController.deleteMe);
+
+router.use(authController.restrictTo('admin'));
 
 router
 	.route('/')
-	.get(
-		//authController.restricTo('admin')
-		userController.getAllUsers
-	)
-	.post(
-		//authController.restricTo('admin')
-		userController.createUser
-	);
+	.get(userController.getAllUsers)
+	.post(userController.createUser);
 
 router
 	.route('/:id')
-	.get(
-		//authController.restricTo('admin')
-		userController.getUser
-	)
-	.patch(
-		//authController.restricTo('admin')
-		userController.updateUser
-	)
-	.delete(
-		//authController.restricTo('admin')
-		userController.deleteUser
-	);
+	.get(userController.getUser)
+	.patch(userController.updateUser)
+	.delete(userController.deleteUser);
 
 module.exports = router;

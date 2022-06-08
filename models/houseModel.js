@@ -69,20 +69,21 @@ const houseSchema = new mongoose.Schema(
 	}
 );
 
-// Document middleware
-
-//runs only before .save, .create
-houseSchema.pre('save', function (next) {
-	//create a name to be used for better looking url
-	this.slug = slugify(this.name, { lower: true });
-	next();
-});
+houseSchema.index({ slug: 1 });
 
 // virtual populate
 houseSchema.virtual('reviews', {
 	ref: 'Review',
 	foreignField: 'house',
 	localField: '_id',
+});
+
+// Document middleware
+//runs only before .save, .create
+houseSchema.pre('save', function (next) {
+	//create a name to be used for better looking url
+	this.slug = slugify(this.name, { lower: true });
+	next();
 });
 
 //Query middleware
