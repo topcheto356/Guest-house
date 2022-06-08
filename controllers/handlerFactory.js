@@ -1,4 +1,4 @@
-const AppError = require('../../Natours/utils/appError');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const APIFeatures = require('../utils/apiFeatures');
 
@@ -16,8 +16,16 @@ exports.createOne = (Model) =>
 // Get all documents
 exports.getAll = (Model) =>
 	catchAsync(async (req, res, next) => {
+		//to allow for nested Get review on tour
+		let filter = {};
+
+		//if there is tourid in the req is will return review for that tour
+		//if not it will return all review
+		if (req.params.houseId) {
+			filter = { tour: req.params.houseId };
+		}
 		//EXECUTE QUERRY
-		const features = new APIFeatures(Model.find(), req.query)
+		const features = new APIFeatures(Model.find(filter), req.query)
 			.filter()
 			.sort()
 			.limitFields()
@@ -32,14 +40,14 @@ exports.getAll = (Model) =>
 	});
 
 // Get document
-exports.getOne = (Model, populate) =>
+exports.getOne = (Model, populates) =>
 	catchAsync(async (req, res, next) => {
 		//do the query
 		let query = Model.findById(req.params.id);
 
 		//check if there are populate options
 		//if they are add populate
-		if (populate) query = query.populate(populate);
+		if (populates) query = query.populate(populates);
 
 		const doc = await query;
 

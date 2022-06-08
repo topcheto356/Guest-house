@@ -1,6 +1,6 @@
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../../Natours/utils/appError');
+const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
 //filter the updated data

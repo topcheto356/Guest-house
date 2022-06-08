@@ -92,8 +92,9 @@ houseSchema.pre('save', function (next) {
 houseSchema.pre(/^find/, function (next) {
 	this.populate({
 		path: 'owners',
-		select: '-__v-passwordChangedAt',
+		select: '-__v -passwordChangedAt',
 	});
+	next();
 });
 
 const House = mongoose.model('House', houseSchema);
