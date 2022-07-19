@@ -8,14 +8,14 @@
 - get all houses
 - get top 5 houses
 
-#Authorization
+# Authorization
 - login user
 - sign up user
 - forgot password
 - reset password
 - update password
 
-#Users
+# Users
 - get user (admin)
 - get all users (admin)
 - delete me
@@ -25,7 +25,7 @@
 - get me 
 - get user by token
 
-#Reviews
+# Reviews
 - get all reviews
 - get review
 - delete review
