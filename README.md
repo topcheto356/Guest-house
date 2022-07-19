@@ -1,6 +1,6 @@
 # Guest-house-API-
 
-#Houses
+# Houses
 - get a house
 - delete a house
 - create a house
